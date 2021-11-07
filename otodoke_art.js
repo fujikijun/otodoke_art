@@ -87,7 +87,7 @@ function draw()
   cg.background( 255 );
   cg.push();
   let s = 1.0 - float(mouseY)/float(height);
-  cg.translate( mouseX-width, height/16 );
+  cg.translate( mouseX-width, -height/16 );
   cg.translate( player.width/2, player.height/2 );
   cg.scale( 0.5 + s*2.0 );
   cg.translate( -player.width/2, -player.height/2 );
