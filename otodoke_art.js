@@ -16,7 +16,6 @@ let cg;
 let scaling = 1;
 let delta = 0.002;
 let depth = 0.1;
-let fingerNum = 0;
 
 function getParam(name, url)
 {
@@ -81,22 +80,6 @@ function setup()
 
   cg = createGraphics( width, height );
 
-  canvas.ontouchmove = function (e) 
-  {
-    e.preventDefault();
-    fingerNum = e.touches.length;
-    /*
-    for (var i = 0; i < e.touches.length; i++) 
-    {
-      var t = e.touches[i];       // 触れている指に関する情報を取得
-
-      s += "[" + i + "]";
-      s += "x=" + t.pageX + ",";
-      s += "y=" + t.pageY + "<br>";
-    }
-    */
-  };
-
   frameRate( 30 );
 }
 
@@ -122,7 +105,7 @@ function draw()
     }
   }
   let s = depth;
-  cg.translate( mouseX/scaling-BASE_DISPLAY_WIDTH/2, -BASE_DISPLAY_HEIGHT/8+BASE_DISPLAY_HEIGHT/2 );  
+  cg.translate( mouseX/scaling-BASE_DISPLAY_WIDTH/2, mouseY/scaling-BASE_DISPLAY_HEIGHT/2 );  
 
   cg.translate( player.width/2, player.height/2+player.height/8 );
   cg.scale( 0.5 + s*2.0 );
@@ -146,10 +129,4 @@ function draw()
 
   noStroke();
   rect( 0, 0 );
-  
-  resetShader();
-  for( let i=0; i<fingerNum; i++ )
-  {
-    ellipse( 100, i*10, 50, 50 );
-  }
 }
