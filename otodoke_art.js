@@ -38,8 +38,7 @@ function preload()
 {
   let strClass = getParam('class');
   let strGroup = getParam('group');
-
-  console.log( strClass, strGroup );
+  //path = strClass + '/'+ strGroup+'/';
 
   theShader = loadShader( 'data/webcam.vert', 'data/webcam.frag' );
   for ( let i=0; i<num; i++ )
@@ -87,10 +86,11 @@ function draw()
   cg.background( 255 );
   cg.push();
   let s = 1.0 - float(mouseY)/float(height);
-  cg.translate( mouseX-width, -height/16 );
-  cg.translate( player.width/2, player.height/2 );
-  cg.scale( 0.5 + s*2.0 );
-  cg.translate( -player.width/2, -player.height/2 );
+  cg.translate( mouseX-player.width/2, 0-player.height/2+player.height/2 );  
+  cg.translate( player.width/2, player.height/2+player.height/8 );
+  cg.scale( 0.5 + s*1.2 );
+  cg.translate( -player.width/2, -player.height/2-player.height/8 );
+
   cg.image( player, 0, 0 );
   cg.pop();
 
