@@ -42,7 +42,7 @@ function preload()
   let strClass = getParam('class');
   let strGroup = getParam('group');
   path = strClass + '/'+ strGroup+'/';
-  //console.log( path );
+  console.log( path );
 
   theShader = loadShader( 'data/webcam.vert', 'data/webcam.frag' );
   for ( let i=0; i<num; i++ )
