@@ -105,11 +105,11 @@ function draw()
     }
   }
   let s = depth;
-  cg.translate( mouseX/scaling-BASE_DISPLAY_WIDTH/2, mouseY/scaling-BASE_DISPLAY_HEIGHT/2 );  
+  cg.translate( mouseX/scaling-BASE_DISPLAY_WIDTH/2, mouseY/scaling-BASE_DISPLAY_HEIGHT/2+BASE_DISPLAY_HEIGHT/6 );  
 
-  cg.translate( player.width/2, player.height/2+player.height/8 );
+  cg.translate( player.width/2, player.height/2-BASE_DISPLAY_HEIGHT/6 );
   cg.scale( 0.5 + s*2.0 );
-  cg.translate( -player.width/2, -player.height/2-player.height/8 );
+  cg.translate( -player.width/2, -player.height/2+BASE_DISPLAY_HEIGHT/6 );
 
   cg.image( player, 0, 0 );
   cg.pop();
