@@ -19,6 +19,7 @@ function preload()
   let strClass = getParam('class');
   let strGroup = getParam('group');
   
+  
   console.log( strClass,strGroup );
   
   theShader = loadShader( 'data/webcam.vert', 'data/webcam.frag' );
