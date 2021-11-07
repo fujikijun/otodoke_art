@@ -14,14 +14,33 @@ let path = '5_1/1/';
 let player;
 let cg;
 
+function getParam(name, url)
+{
+  if (!url)
+  {
+    url = window.location.href;
+  }
+  name = name.replace(/[\[\]]/g, "\\$&");
+  var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"), 
+    results = regex.exec(url);
+  if (!results)
+  {
+    return null;
+  }
+  if (!results[2])
+  {
+    return '';
+  }
+  return decodeURIComponent(results[2].replace(/\+/g, " "));
+}
+
 function preload()
 {
   let strClass = getParam('class');
   let strGroup = getParam('group');
-  
-  
-  console.log( strClass,strGroup );
-  
+
+  console.log( strClass, strGroup );
+
   theShader = loadShader( 'data/webcam.vert', 'data/webcam.frag' );
   for ( let i=0; i<num; i++ )
   {
