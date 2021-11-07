@@ -95,9 +95,9 @@ function draw()
   if( mouseIsPressed )
   {
     depth -= (mouseY-pmouseY)*delta;
-    if( depth  < 0.01 )
+    if( depth  < 0.05 )
     {
-      depth = 0.01;
+      depth = 0.05;
     }
     if( depth > 1.0 )
     {
