@@ -14,7 +14,7 @@ let path = '5_1/1/';
 let player;
 let cg;
 let scaling = 1;
-let delta = 0.001;
+let delta = 0.002;
 let depth = 0.1;
 
 function getParam(name, url)
