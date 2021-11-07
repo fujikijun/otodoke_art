@@ -14,6 +14,8 @@ let path = '5_1/1/';
 let player;
 let cg;
 let scaling = 1;
+let delta = 0.001;
+let depth = 0.1;
 
 function getParam(name, url)
 {
@@ -39,7 +41,7 @@ function preload()
 {
   let strClass = getParam('class');
   let strGroup = getParam('group');
-  path = strClass + '/'+ strGroup+'/';
+  //path = strClass + '/'+ strGroup+'/';
   console.log( path );
 
   theShader = loadShader( 'data/webcam.vert', 'data/webcam.frag' );
@@ -89,7 +91,20 @@ function draw()
   cg.background( 255 );
   cg.push();
   cg.scale( scaling );
-  let s = 1.0 - float(mouseY)/float(height);
+  //let s = 1.0 - float(mouseY)/float(height);
+  if( mouseIsPressed )
+  {
+    depth -= (mouseY-pmouseY)*delta;
+    if( depth  < 0.01 )
+    {
+      depth = 0.01;
+    }
+    if( depth > 1.0 )
+    {
+      depth = 1.0;
+    }
+  }
+  let s = depth;
   cg.translate( mouseX/scaling-BASE_DISPLAY_WIDTH/2, -BASE_DISPLAY_HEIGHT/8+BASE_DISPLAY_HEIGHT/2 );  
   
   cg.translate( player.width/2, player.height/2+player.height/8 );
@@ -110,16 +125,7 @@ function draw()
     theShader.setUniform('tex3', img[3]);
     theShader.setUniform('tex4', img[4]);
   }
-  let v = 1.0-float(mouseY)/float(height);
-  if( v < 0 )
-  {
-    v = 0;
-  }
-  if( v > 1.0 )
-  {
-    v = 1.0;
-  }
-  theShader.setUniform( 'value', v );
+  theShader.setUniform( 'value', depth );
 
   noStroke();
   rect( 0, 0 );
