@@ -8,6 +8,7 @@ uniform sampler2D tex2;
 uniform sampler2D tex3;
 uniform sampler2D tex4;
 uniform float value;
+uniform sampler2D player;
 
 void main() 
 {
@@ -26,6 +27,13 @@ void main()
   if ( d < 0.0 )
   {
     d = 0.0;
+  }
+
+  vec4 sil = texture2D( player, st );
+  if( sil.r > 0.5 )
+  {
+	gl_FragColor = texture2D( tex0, st );
+	return;
   }
 
   int d1 = int( floor(d) );

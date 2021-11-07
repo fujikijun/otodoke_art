@@ -11,14 +11,23 @@ let theShader;
 let img = [];
 let num = 5;
 let path = '5_1/1/';
+let player;
+let cg;
 
 function preload()
 {
+  let strClass = getParam('class');
+  let strGroup = getParam('group');
+  
+  console.log( strClass,strGroup );
+  
   theShader = loadShader( 'data/webcam.vert', 'data/webcam.frag' );
   for ( let i=0; i<num; i++ )
   {
     img[i] = loadImage( 'data/' + path + (i+1) + '.jpg' );
   }
+
+  player = loadImage( 'data/kage.jpg' );
 }
 
 function setup()
@@ -45,6 +54,8 @@ function setup()
   canvas.style('left', x);
   canvas.style('top', y);
 
+  cg = createGraphics( width, height );
+
   frameRate( 30 );
 }
 
@@ -52,8 +63,19 @@ function draw()
 {
   resetShader();
   background( 0 );
-  shader( theShader );
 
+  cg.background( 255 );
+  cg.push();
+  let s = 1.0 - float(mouseY)/float(height);
+  cg.translate( mouseX-width, height/8 );
+  cg.translate( player.width/2, player.height/2 );
+  cg.scale( 0.5 + s*2.0 );
+  cg.translate( -player.width/2, -player.height/2 );
+  cg.image( player, 0, 0 );
+  cg.pop();
+
+  shader( theShader );
+  theShader.setUniform('player', cg );
   {
     theShader.setUniform('tex0', img[0]);
     theShader.setUniform('tex1', img[1]);
@@ -61,7 +83,7 @@ function draw()
     theShader.setUniform('tex3', img[3]);
     theShader.setUniform('tex4', img[4]);
   }
-  theShader.setUniform( 'value', float(mouseY)/float(height) );
+  theShader.setUniform( 'value', 1.0-float(mouseY)/float(height) );
 
   noStroke();
   rect( 0, 0 );
