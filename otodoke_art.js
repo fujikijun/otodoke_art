@@ -13,6 +13,7 @@ let num = 5;
 let path = '5_1/1/';
 let player;
 let cg;
+let scaling = 1;
 
 function getParam(name, url)
 {
@@ -38,7 +39,7 @@ function preload()
 {
   let strClass = getParam('class');
   let strGroup = getParam('group');
-  //path = strClass + '/'+ strGroup+'/';
+  path = strClass + '/'+ strGroup+'/';
 
   theShader = loadShader( 'data/webcam.vert', 'data/webcam.frag' );
   for ( let i=0; i<num; i++ )
@@ -64,6 +65,7 @@ function setup()
     w =  r2;
     h =  r2;
   }
+  scaling = w;
   x = ( windowWidth - w*float(BASE_DISPLAY_WIDTH) ) / 2;
   y = ( windowHeight - h*float(BASE_DISPLAY_HEIGHT) ) / 2;
 
@@ -85,14 +87,18 @@ function draw()
 
   cg.background( 255 );
   cg.push();
+  cg.scale( scaling );
   let s = 1.0 - float(mouseY)/float(height);
-  cg.translate( mouseX-player.width/2, 0-player.height/2+player.height/2 );  
+  cg.translate( mouseX/scaling-BASE_DISPLAY_WIDTH/2, -BASE_DISPLAY_HEIGHT/8+BASE_DISPLAY_HEIGHT/2 );  
+  
   cg.translate( player.width/2, player.height/2+player.height/8 );
-  cg.scale( 0.5 + s*1.2 );
+  cg.scale( 0.5 + s*2.0 );
   cg.translate( -player.width/2, -player.height/2-player.height/8 );
 
   cg.image( player, 0, 0 );
   cg.pop();
+
+  //image( cg, -width/2, -height/2 );
 
   shader( theShader );
   theShader.setUniform('player', cg );
@@ -103,7 +109,16 @@ function draw()
     theShader.setUniform('tex3', img[3]);
     theShader.setUniform('tex4', img[4]);
   }
-  theShader.setUniform( 'value', 1.0-float(mouseY)/float(height) );
+  let v = 1.0-float(mouseY)/float(height);
+  if( v < 0 )
+  {
+    v = 0;
+  }
+  if( v > 1.0 )
+  {
+    v = 1.0;
+  }
+  theShader.setUniform( 'value', v );
 
   noStroke();
   rect( 0, 0 );
